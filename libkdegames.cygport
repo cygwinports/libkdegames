@@ -1,13 +1,16 @@
 inherit kde4
 
 NAME="libkdegames"
-VERSION=4.10.5
+VERSION=4.11.5
 RELEASE=1
 CATEGORY="Libs"
 SUMMARY="KDE game library"
 
+PATCH_URI="4.11.5-qml-module.patch"
+
 PKG_NAMES="libkdegames6 libkdegames-common libkdegames-devel"
 libkdegames6_REQUIRES="libkdegames-common"
-libkdegames6_CONTENTS="usr/bin/cygkdegames-6.dll usr/bin/cygkdegamesprivate-*.dll"
+libkdegames6_CONTENTS="usr/bin/cygkdegames-6.dll usr/bin/cygkdegamesprivate-*.dll usr/lib/kde4/"
 libkdegames_common_CONTENTS="usr/share/"
-libkdegames_devel_CONTENTS="usr/include/ usr/lib/"
+libkdegames_devel_REQUIRES="libkdecore-devel libQtDeclarative4-devel"
+libkdegames_devel_CONTENTS="usr/include/ usr/lib/cmake/ usr/lib/lib*"

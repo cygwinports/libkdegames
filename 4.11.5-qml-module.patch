@@ -1,0 +1,11 @@
+--- origsrc/libkdegames-4.11.5/declarativeimports/CMakeLists.txt	2014-01-02 13:36:14.000000000 -0600
++++ src/libkdegames-4.11.5/declarativeimports/CMakeLists.txt	2014-02-24 18:37:13.145638600 -0600
+@@ -14,7 +14,7 @@ INCLUDE_DIRECTORIES(
+ 
+ qt4_automoc(${corebindings_SRCS})
+ 
+-add_library(corebindingsplugin SHARED ${corebindings_SRCS})
++add_library(corebindingsplugin MODULE ${corebindings_SRCS})
+ target_link_libraries(corebindingsplugin kdegames ${QT_QTDECLARATIVE_LIBRARY})
+ 
+ install(TARGETS corebindingsplugin DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/games/core)
