@@ -2,15 +2,37 @@ inherit kde4
 
 NAME="libkdegames"
 VERSION=14.12.3
-RELEASE=1
+RELEASE=2
 CATEGORY="Libs"
 SUMMARY="KDE game library"
 
 PATCH_URI="4.11.5-qml-module.patch"
 
-PKG_NAMES="libkdegames6 libkdegames-common libkdegames-devel"
-libkdegames6_REQUIRES="libkdegames-common"
-libkdegames6_CONTENTS="usr/bin/cygkdegames-6.dll usr/bin/cygkdegamesprivate-*.dll usr/lib/kde4/"
-libkdegames_common_CONTENTS="usr/share/"
-libkdegames_devel_REQUIRES="libkdecore-devel libQtDeclarative4-devel"
-libkdegames_devel_CONTENTS="usr/include/ usr/lib/cmake/ usr/lib/lib*"
+PKG_NAMES="libkdegames6 libkdegames6-devel"
+libkdegames6_OBSOLETES="libkdegames-common"
+libkdegames6_CONTENTS="
+	usr/bin/cygkdegames-6.dll
+	usr/bin/cygkdegamesprivate-*.dll
+	usr/lib/kde4/imports/org/kde/games/
+	usr/share/doc/${NAME}
+	usr/share/kde4/apps/carddecks/
+	usr/share/kde4/apps/kconf_update/*
+"
+libkdegames6_devel_OBSOLETES="libkdegames-devel"
+libkdegames6_devel_REQUIRES="libkdecore5-devel libQtDeclarative4-devel"
+libkdegames6_devel_CONTENTS="
+	usr/include/kde4/*
+	usr/lib/cmake/KDEGames/
+	usr/lib/kde4/devel/lib*
+"
+
+src_install() {
+	cd ${B}
+	kde4_install
+
+	# parallel devel
+	dodir /usr/lib/kde4/devel
+	mv ${D}/usr/lib/*.dll.a ${D}/usr/lib/kde4/devel/
+	sed -i -e 's|lib/lib|lib/kde4/devel/lib|g' \
+		${D}/usr/lib/cmake/KDEGames/KDEGamesLibrary*.cmake
+}
